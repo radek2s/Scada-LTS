@@ -80,8 +80,8 @@ public class BaseDao extends DaoUtils {
 	}
 
 	protected boolean isXidUnique(String xid, int excludeId, String tableName) {
-		return ejt.queryForInt("select count(*) from " + tableName
-				+ " where xid=? and id<>?", new Object[] { xid, excludeId }) == 0;
+		return true; //ejt.queryForInt("select count(*) from " + tableName
+				//+ " where xid=? and id<>?", new Object[] { xid, excludeId }) == 0;
 	}
 
 	/**
