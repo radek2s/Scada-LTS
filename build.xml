@@ -39,117 +39,117 @@
 
 
     <path id="Web App Libraries.libraryclasspath">
-        <pathelement location="WebContent/WEB-INF/lib/OneWireAPI.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/OneWireAPI.jar"/>
 
-        <pathelement location="WebContent/WEB-INF/lib/RXTXcomm.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/SNMP4J.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/activation.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/alpha24j.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/axis.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/bacnet4J.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/catalina-ant-6.0.29.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-codec-1.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-collections-3.2.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-dbcp-jdbc4.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-discovery-0.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-fileupload-1.3.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-httpclient-3.0.1.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-io.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-lang3-3.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-logging.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/commons-pool.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/crowd-integration-client-2.1.1.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/derby.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/derbytools.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/dnp3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/dnp34j.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/dwr.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/ezmorph-1.0.6.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/fhz4j-core-0.1.4-SNAPSHOT.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/freemarker.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/flyway-core-4.0.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/iec101.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/j-interop-2.06.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/j-interopdeps-1.4.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jackson-annotations-2.8.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jackson-core-2.8.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jackson-databind-2.8.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/javamelody-1.59.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jaxrpc.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jboss-common-jdbc-wrapper-3.2.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jcifs-1.2.19.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jcommon-1.0.23.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jdom-1.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jfreechart-1.0.19.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/joda-time-2.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jrobin-1.5.9.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/js.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/json-lib-2.3-jdk15.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jstl-api-1.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jstl-impl-1.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/jstl.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/log4j-1.2-api-2.11.1.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/log4j-api-2.11.1.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/log4j-core-2.11.1.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/disruptor-3.3.4.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mail.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mbus4j-core-0.1.4-SNAPSHOT.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mbus4j-master-0.1.4-SNAPSHOT.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/modbus4j-3.0.2.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mysql-connector-java-3.1.8-bin.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mysql-connector-java-5.1.38-bin.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/ojdbc6.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/opc-driver.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/openscada-utils.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/openv4j-core-0.1.4-SNAPSHOT.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.openscada.opc.dcom-0.5.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.openscada.opc.lib-0.5.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.osgi.core-4.0.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.restlet-2.0.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.restlet.ext.json-2.0.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.restlet.ext.servlet-2.0.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/org.restlet.lib.org.json-2.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/postgresql-9.2-1000.jdbc4.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/quartz-1.6.3.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/rts.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/saaj.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/seroUtils.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/serotonin-timer.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/slf4j-api-1.5.11.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/slf4j-ext-1.5.11.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/slf4j-log4j12-1.5.11.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spinwave.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-aop-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-beans-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-context-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-context-support-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-core-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-expression-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-jdbc-3.2.17.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-jdbc-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-tx-4.3.16.RELEASE.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/spring-tx-3.2.17.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-web-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-webmvc-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-websocket-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/spring-messaging-4.3.16.RELEASE.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/spring-test-4.3.16.RELEASE.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/sqljdbc4.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/standard.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/taglibs-log.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/viconics.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/wsdl4j.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/wss4j-1.5.8.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/xfire-aegis-1.2.6.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/xfire-core-1.2.6.jar"/>
-        <pathelement location="WebContent/WEB-INF/lib/xmlsec-1.4.3.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/junit-4.8.2.jar"/>
-  		<pathelement location="WebContent/WEB-INF/lib/mockito-all-1.9.5.jar"/>
-    	<pathelement location="WebContent/WEB-INF/lib/mockito-core-2.11.0.jar"/>
-        <pathelement location="WebContent/WEB-INF/classes"/>
+        <pathelement location="src/webapp/WEB-INF/lib/RXTXcomm.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/SNMP4J.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/activation.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/alpha24j.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/axis.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/bacnet4J.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/catalina-ant-6.0.29.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-codec-1.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-collections-3.2.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-dbcp-jdbc4.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-discovery-0.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-fileupload-1.3.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-httpclient-3.0.1.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-io.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-lang3-3.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-logging.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/commons-pool.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/crowd-integration-client-2.1.1.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/derby.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/derbytools.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/dnp3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/dnp34j.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/dwr.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/ezmorph-1.0.6.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/fhz4j-core-0.1.4-SNAPSHOT.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/freemarker.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/flyway-core-4.0.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/iec101.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/j-interop-2.06.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/j-interopdeps-1.4.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jackson-annotations-2.8.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jackson-core-2.8.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jackson-databind-2.8.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/javamelody-1.59.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jaxrpc.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jboss-common-jdbc-wrapper-3.2.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jcifs-1.2.19.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jcommon-1.0.23.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jdom-1.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jfreechart-1.0.19.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/joda-time-2.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jrobin-1.5.9.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/js.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/json-lib-2.3-jdk15.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jstl-api-1.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jstl-impl-1.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/jstl.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/log4j-1.2-api-2.11.1.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/log4j-api-2.11.1.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/log4j-core-2.11.1.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/disruptor-3.3.4.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mail.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mbus4j-core-0.1.4-SNAPSHOT.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mbus4j-master-0.1.4-SNAPSHOT.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/modbus4j-3.0.2.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mysql-connector-java-3.1.8-bin.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mysql-connector-java-5.1.38-bin.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/ojdbc6.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/opc-driver.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/openscada-utils.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/openv4j-core-0.1.4-SNAPSHOT.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.openscada.opc.dcom-0.5.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.openscada.opc.lib-0.5.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.osgi.core-4.0.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.restlet-2.0.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.restlet.ext.json-2.0.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.restlet.ext.servlet-2.0.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/org.restlet.lib.org.json-2.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/postgresql-9.2-1000.jdbc4.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/quartz-1.6.3.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/rts.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/saaj.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/seroUtils.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/serotonin-timer.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/slf4j-api-1.5.11.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/slf4j-ext-1.5.11.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/slf4j-log4j12-1.5.11.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spinwave.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-aop-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-beans-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-context-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-context-support-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-core-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-expression-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-jdbc-3.2.17.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-jdbc-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-tx-4.3.16.RELEASE.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/spring-tx-3.2.17.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-web-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-webmvc-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-websocket-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/spring-messaging-4.3.16.RELEASE.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/spring-test-4.3.16.RELEASE.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/sqljdbc4.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/standard.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/taglibs-log.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/viconics.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/wsdl4j.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/wss4j-1.5.8.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/xfire-aegis-1.2.6.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/xfire-core-1.2.6.jar"/>
+        <pathelement location="src/webapp/WEB-INF/lib/xmlsec-1.4.3.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/junit-4.8.2.jar"/>
+  		<pathelement location="src/webapp/WEB-INF/lib/mockito-all-1.9.5.jar"/>
+    	<pathelement location="src/webapp/WEB-INF/lib/mockito-core-2.11.0.jar"/>
+        <pathelement location="src/webapp/WEB-INF/classes"/>
     </path>
 	<path id="EAR Libraries.libraryclasspath"/>
 	<path id="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath">
@@ -176,20 +176,20 @@
 	</path>
 
 	<path id="httpcomponents-client-4.5.3">
-		<pathelement location="WebContent/WEB-INF/lib/commons-codec-1.9.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/commons-logging-1.2.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/fluent-hc-4.5.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/httpclient-4.5.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/httpclient-cache-4.5.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/httpclient-win-4.5.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/httpcore-4.4.6.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/httpmime-4.5.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/jna-4.1.0.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/jna-platform-4.1.0.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/commons-codec-1.9.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/commons-logging-1.2.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/fluent-hc-4.5.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/httpclient-4.5.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/httpclient-cache-4.5.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/httpclient-win-4.5.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/httpcore-4.4.6.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/httpmime-4.5.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/jna-4.1.0.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/jna-platform-4.1.0.jar"/>
 	</path>
 
 	<path id="datasource-library">
-		<pathelement location="WebContent/WEB-INF/lib/amqp-client-5.4.1.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/amqp-client-5.4.1.jar"/>
 	</path>
 
 	<path id="scadabr-1.1.0-RC.classpath">
@@ -198,24 +198,24 @@
 		<path refid="EAR Libraries.libraryclasspath"/>
 		<path refid="httpcomponents-client-4.5.3"/>
 		<path refid="datasource-library"/>
-		<pathelement location="WebContent/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/wss4j-1.5.8.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/xmlsec-1.4.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/opc-driver.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/dnp34j.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/iec101.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/rts.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/bacnet4J.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/sqljdbc4.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/alpha24j.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/wss4j-1.5.8.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/xmlsec-1.4.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/opc-driver.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/dnp34j.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/iec101.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/rts.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/bacnet4J.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/sqljdbc4.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/alpha24j.jar"/>
 		<pathelement location="lib/mockito-all-1.9.5.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/joda-time-2.3.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/modbus4j-2.0.2.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/joda-time-2.3.jar"/>
+		<pathelement location="src/webapp/WEB-INF/lib/modbus4j-2.0.2.jar"/>
 		<path refid="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath"/>
 	</path>
 
 	<target name="update-static-web-dependecy" description="Update static web dependency">
-	  <exec dir="WebContent/resources/app" executable="bower">
+	  <exec dir="src/webapp/resources/app" executable="bower">
 	    <arg  value="update"/>
 	  </exec>
 	</target>
@@ -267,19 +267,19 @@
 	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
 	<target name="war" description="Bundles the application as a WAR file" depends="clean, build">
 
-		<delete dir="WebContent/resources/new-ui"></delete>
-		<mkdir dir="WebContent/resources/new-ui"></mkdir>
-		<mkdir dir="WebContent/resources/new-ui/css"></mkdir>
-		<mkdir dir="WebContent/resources/new-ui/js"></mkdir>
+		<delete dir="src/webapp/resources/new-ui"></delete>
+		<mkdir dir="src/webapp/resources/new-ui"></mkdir>
+		<mkdir dir="src/webapp/resources/new-ui/css"></mkdir>
+		<mkdir dir="src/webapp/resources/new-ui/js"></mkdir>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/css">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/css">
 			<fileset dir="ScadaLTS-UI-1/dist/static/css">
 				<include name="*"/>
 			</fileset>
 			<mapper type="glob" from="app.*.css" to="app.css"/>
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
@@ -287,35 +287,35 @@
 
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
 			<mapper type="glob" from="vendor.*.js" to="vendor.js"/>
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
 			<mapper type="glob" from="manifest.*.js" to="manifest.js"/>
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
 			<mapper type="glob" from="vendor.*.js.map" to="vendor.js.map"/>
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
 			<mapper type="glob" from="manifest.*.js.map" to="manifest.js.map"/>
 		</copy>
 
-		<copy includeemptydirs="false" todir="WebContent/resources/new-ui/js">
+		<copy includeemptydirs="false" todir="src/webapp/resources/new-ui/js">
 			<fileset dir="ScadaLTS-UI-1/dist/static/js">
 				<include name="*"/>
 			</fileset>
@@ -324,8 +324,8 @@
 		</copy>
 
 
-		<mkdir dir="WebContent/WEB-INF/classes"/>
-		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+		<mkdir dir="src/webapp/WEB-INF/classes"/>
+		<copy includeemptydirs="false" todir="src/webapp/WEB-INF/classes">
 			<fileset dir="build/classes">
 				<include name="**/*.class"/>
 			</fileset>
@@ -349,45 +349,45 @@
 		    </classpath>
 			
 		    <!--
-			<test name="br.org.scadabr.api.AckEventsTest" 
+			<test name="AckEventsTest"
 				haltonfailure="no">
 			</test>
 		    	
-		    <test name="br.org.scadabr.api.ActiveEventsTest" 
+		    <test name="ActiveEventsTest"
 		        haltonfailure="no">
 		    </test>
 		    	
-		    <test name="br.org.scadabr.api.ActiveEventsTest" 
+		    <test name="ActiveEventsTest"
 		        haltonfailure="no">
 		    </test>
 		    -->
 		    <!--
-		    <test name="org.scada_lts.dao.ViewHierarchyDaoTest"
+		    <test name="ViewHierarchyDaoTest"
 		    	haltonfailure="no">
 		    </test>
 		    
-		    <test name="org.scada_lts.service.ViewHierarchyServiceTest"
+		    <test name="ViewHierarchyServiceTest"
 		        haltonfailure="yes">
 		    </test>
 		    	
-		    <test name="org.scada_lts.service.ViewHierarchyServiceTestOnDB"
+		    <test name="ViewHierarchyServiceTestOnDB"
 		    	haltonfailure="yes">
 		    </test>
 		    -->
 		    <!--	
-		    <test name="org.scada_lts.service.ViewHierarchyServiceMoveFolderTest"
+		    <test name="ViewHierarchyServiceMoveFolderTest"
 		        haltonfailure="yes">
 		    </test>
 		    	
-		    <test name="org.scada_lts.service.ViewHierarchyServiceMoveViewTest"
+		    <test name="ViewHierarchyServiceMoveViewTest"
 		        haltonfailure="yes">
 		    </test>
 		    -->
-		    <test name="org.scada_lts.cached.DataPointsCacheComposeDataSourcesDataTest"
+		    <test name="DataPointsCacheComposeDataSourcesDataTest"
 		    	haltonfailure="yes">
 		    </test>	
 		    	
-		    <test name="org.scada_lts.cached.DataSourcePointsCacheMockitoTest"
+		    <test name="DataSourcePointsCacheMockitoTest"
 		    	haltonfailure="yes">
 		    </test>
 		    	
@@ -401,8 +401,8 @@
 	</target>
 	
 	<target name="war_config_test" description="Bundles the application as a WAR file with config test" depends="clean, build, junit">
-		<mkdir dir="WebContent/WEB-INF/classes"/>
-		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+		<mkdir dir="src/webapp/WEB-INF/classes"/>
+		<copy includeemptydirs="false" todir="src/webapp/WEB-INF/classes">
 			<fileset dir="build/classes">
 				<include name="**/*.class"/>
 				<include name="**/*.properties"/>
