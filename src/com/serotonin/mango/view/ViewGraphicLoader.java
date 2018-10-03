@@ -103,34 +103,34 @@ public class ViewGraphicLoader {
             }
         }
 
-        if (!imageFiles.isEmpty()) {
-            if (width == -1 || height == -1) {
-                String imagePath = path + "/" + imageFiles.get(0);
-                Image image = Toolkit.getDefaultToolkit().getImage(imagePath);
-                MediaTracker tracker = new MediaTracker(new Container());
-                tracker.addImage(image, 0);
-                tracker.waitForID(0);
-
-                if (width == -1)
-                    width = image.getWidth(null);
-                if (height == -1)
-                    height = image.getHeight(null);
-            }
-
-            if (width == -1 || height == -1)
-                throw new Exception("Unable to derive image dimensions");
-
-            String[] imageFileArr = imageFiles.toArray(new String[imageFiles.size()]);
-            ViewGraphic g;
-            if ("imageSet".equals(typeStr))
-                g = new ImageSet(id, name, imageFileArr, width, height, textX, textY);
-            else if ("dynamic".equals(typeStr))
-                g = new DynamicImage(id, name, imageFileArr[0], width, height, textX, textY);
-            else
-                throw new Exception("Invalid type: " + typeStr);
-
-            viewGraphics.add(g);
-        }
+//        if (!imageFiles.isEmpty()) {
+//            if (width == -1 || height == -1) {
+//                String imagePath = path + "/" + imageFiles.get(0);
+//                Image image = Toolkit.getDefaultToolkit().getImage(imagePath);
+//                MediaTracker tracker = new MediaTracker(new Container());
+//                tracker.addImage(image, 0);
+//                tracker.waitForID(0);
+//
+//                if (width == -1)
+//                    width = image.getWidth(null);
+//                if (height == -1)
+//                    height = image.getHeight(null);
+//            }
+//
+//            if (width == -1 || height == -1)
+//                throw new Exception("Unable to derive image dimensions");
+//
+//            String[] imageFileArr = imageFiles.toArray(new String[imageFiles.size()]);
+//            ViewGraphic g;
+//            if ("imageSet".equals(typeStr))
+//                g = new ImageSet(id, name, imageFileArr, width, height, textX, textY);
+//            else if ("dynamic".equals(typeStr))
+//                g = new DynamicImage(id, name, imageFileArr[0], width, height, textX, textY);
+//            else
+//                throw new Exception("Invalid type: " + typeStr);
+//
+//            viewGraphics.add(g);
+//        }
         Collections.sort(viewGraphics, new Comparator<ViewGraphic>() {
 		      @Override
 		      public int compare(final ViewGraphic prev, final ViewGraphic next) {

@@ -1,0 +1,36 @@
+group 'ScadaLTS'
+version '0.9.1'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main {
+        java {
+            srcDir('src')
+        }
+    }
+    
+    test {
+        java {
+            srcDir('test')
+        }
+    }
+}
+
+war {
+    from 'WebContent'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    compile fileTree(include: ['*.jar'], dir: 'WebContent/WEB-INF/lib')
+    compile fileTree(include: ['*.jar'], dir: '/opt/tomcat/tomcat8.5/lib')
+    
+}
