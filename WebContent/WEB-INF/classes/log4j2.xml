@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+@author: Radek Jajko
+-->
+<Configuration>
+
+    <Appenders>
+
+        <!-- Default LOG export -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+        </Console>
+
+        <!-- ROLLING FILE LOG (RFL) for Modbus -->
+        <RollingFile name="RFL_MODBUS"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_modbus.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/modbus-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_DATASOURCES"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_datasources.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/datasources-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_DATABASE"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_database.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/database-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_LTS_WEB"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_web.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/lts_web-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_LTS_DAO"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_dao.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/dao-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_DWR"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_dwr.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/dwr-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_RUNTIME"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_runtime.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/runtime-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="RFL_VIEW_HIERARCHY"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_view_hierarchy.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/view_hierarchy-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <File name="LOG_FLYWAY" filename="${env:CATALINA_HOME}/logs/ScadaLTS/ScadaLTS_flyway.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+        </File>
+
+        <RollingFile name="LOG_FILE"
+                     filename="${env:CATALINA_HOME}/logs/ScadaLTS.log"
+                     filepattern="${env:CATALINA_HOME}/logs/ScadaLTS/$${date:yyyy-MM}/ScadaLTS-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout pattern="%-5p %d{ISO8601} (%C.%M:%L) - %m %n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <Async name="ASYNC">
+            <AppenderRef ref="LOG_FILE"/>
+        </Async>
+
+        <!-- Tested with <RabbitMQ></RabbitMQ> but it doesn't work (tomcat has started but messages hadn't been sent)   -->
+        <!-- Used org.springframework.amqp:spring-rabbit:1.6.0.M2 library and log4j-2.11 with WEB *.jar                 -->
+        <!-- Used also org.springframework.amqp:spring-rabbit:2.0.6 library and log4j-2.5                               -->
+
+    </Appenders>
+
+    <Loggers>
+
+        <!-- Normal Logging-->
+        <Logger name="org.directwebremoting" level="warn"/>
+        <Logger name="org" level="warn"/>
+        <Logger name="org.springframework.web.servlet.FrameworkServlet" level="error"/>
+        <Logger name="com.serotonin.db.spring.ExtendedJdbcTemplate" level="error"/>
+        <Logger name="com.serotonin.mango" level="info"/>
+
+        <!-- Log4j Logger -->
+        <Logger name="org.apache.log4j.xml" level="debug">
+            <AppenderRef ref="ASYNC"/>
+        </Logger>
+
+        <!-- ScadaBR loggers -->
+        <AsyncLogger name="com.serotonin.modbus4j.ip.listener" level="debug" includeLocation="true">
+            <AppenderRef ref="RFL_MODBUS"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.serotonin.mango.web.dwr" level="debug" includeLocation="true">
+            <AppenderRef ref="RFL_DWR"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.serotonin.mango.rt.RuntimeManager" level="debug" includeLocation="true">
+            <AppenderRef ref="RFL_RUNTIME"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.serotonin.mango.MangoContextListener" level="debug" includeLocation="true">
+            <AppenderRef ref="RFL_RUNTIME"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="org.scada_lts.workdomain.event.RabbitMqExporter" level="debug" includeLocation="true">
+            <AppenderRef ref="RFL_RUNTIME"/>
+        </AsyncLogger>
+
+        <!-- ScadaLTS loggers-->
+        <AsyncLogger name="org.scada_lts.dao" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_LTS_DAO"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.serotonin.mango.db.dao.DataSourceDao" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_LTS_DAO"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="org.scada_lts.service" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_VIEW_HIERARCHY"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="org.scada_lts.web" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_LTS_WEB"/>
+        </AsyncLogger>
+
+        <!-- ScadaLTS loggers :: Datasources-->
+        <AsyncLogger name="com.serotonin.mango.vo.dataSource" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_DATASOURCES"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="com.serotonin.mango.rt.dataSource" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_DATASOURCES"/>
+        </AsyncLogger>
+
+        <AsyncLogger name="org.scada_lts.workdomain.datasource" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_DATASOURCES"/>
+        </AsyncLogger>
+
+        <!-- ScadaLTS loggers :: Database-->
+        <AsyncLogger name="com.serotonin.mango.db" includeLocation="true" level="info">
+            <AppenderRef ref="RFL_DATABASE"/>
+        </AsyncLogger>
+
+        <!-- DataBase migration logger-->
+        <Logger name="com.serotonin.mango.db" level="info">
+            <AppenderRef ref="LOG_FLYWAY"/>
+        </Logger>
+
+        <!-- All default logs -->
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="ASYNC"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
