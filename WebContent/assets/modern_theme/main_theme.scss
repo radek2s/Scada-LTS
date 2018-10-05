@@ -102,6 +102,56 @@ span#__header__alarmLevelText {
     }
 }
 
+$menu-width: 300px;
+.side-menu {
+    height: 100%;
+    width: $menu-width;
+    transition: width 1s;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: $primary_color_dark;
+    padding-top: 20px;
+    overflow-x: hidden;
+
+    ul {
+        padding: 0;
+        margin-top: 25px;
+        list-style: none;
+        
+        li {
+            
+            width: 100%;
+            margin: 1px;
+            padding: 8px;
+            transition: 0.3s;
+
+            &:hover {
+                background-color: $primary_color_accent;
+                transition: 0.3s;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+            }
+
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.content, .main-menu {
+    margin-left: $menu-width;
+    transition: padding-left 1s;
+    padding-left: 1%;
+}
+
+
 
 .projectTitle {
     color: black !important;
@@ -155,6 +205,8 @@ span#__header__alarmLevelText {
         background-color: black;
     }
 }
+
+
 
 
 

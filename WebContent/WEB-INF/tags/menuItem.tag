@@ -21,5 +21,4 @@
 --%><%@attribute name="png" required="true"%><%--
 --%><%@attribute name="key" required="true"%><%--
 --%><c:set var="text"><fmt:message key="${key}"/></c:set><%--
---%><a href="${href}"><tag:img png="${png}" onmouseout="if (typeof hMD == 'function') hMD();"
-        onmouseover="if (typeof hMD == 'function') hMD('${text}', this);"/></a>
+--%><a href="${href}"><tag:img png="${png}"/><span class="menuitem-text">${text}</span></a>
