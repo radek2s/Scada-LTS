@@ -71,7 +71,6 @@
                 <div class="formField">
                   <input id="password" type="password" name="password" value="${login.password}" maxlength="20" style="width: 200px; height: 20px;"/>
                 </div>
-                <span>ScadaLITE</span>
               </div>
 
                 <div class="formError">
