@@ -118,23 +118,31 @@
       window.onload = initate;
 
 
-      var opened = true;
+      var opened = false;
       function toggleNav() {
+        var x = document.getElementsByClassName("menuitem-text");
+        var i;
         if (opened) {
-          document.getElementById("Scada-menu").style.width = "0";
-          document.getElementById("Scada-header").style.marginLeft = "0";
-          document.getElementById("Scada-content").style.marginLeft = "0";
+          document.getElementById("Scada-menu").style.width = "75px";
+          document.getElementById("Scada-content").style.marginLeft = "75px";
           opened = false;
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+          }
         } else {
           document.getElementById("Scada-menu").style.width = "300px";
-          document.getElementById("Scada-header").style.marginLeft = "300px";
           document.getElementById("Scada-content").style.marginLeft = "300px";
           opened = true;
+          for (i = 0; i < x.length; i++) {
+            if(x[i].parentNode.parentElement.tagName == "LI") {
+              x[i].style.display = "block";
+            }
+          
+          } 
+
         }
         
       }
-
-
     </script>
   </c:if>
 </head>
@@ -142,23 +150,9 @@
 <body>
   <header>
     <div class="main-menu" id="Scada-header">
-      <div>
-          <span onclick="toggleNav()">&#9776;</span>
-      </div>
-
       <div class="logo-box">
         <div>
           <img id="logo" src="assets/logo.png" alt="Logo"/>
-        </div>
-        <div>
-          <c:if test="${empty sessionUser}">
-            <tag:menuItem href="login.htm" png="control_play_blue" key="header.login"/>
-          </c:if>  
-          <c:if test="${!empty sessionUser}">
-            <span class="copyTitle"><fmt:message key="header.user"/>:</span>
-            <span class="userName"><b>${sessionUser.username}</b></span>
-          </c:if>
-          <div id="headerMenuDescription" class="labelDiv" style="position:absolute;display:none;"></div>
         </div>
       </div>
 
@@ -179,26 +173,40 @@
       </div>
 
       <div class="utils-box">
+          <div>
           <c:if test="${!empty sessionUser}">
-              <tag:img id="userMutedImg" onclick="MiscDwr.toggleUserMuted(setUserMuted)" onmouseover="hideLayer('localeEdit')"/>
-              <tag:img png="house" title="header.goHomeUrl" onclick="goHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
-              <tag:img png="house_link" title="header.setHomeUrl" onclick="setHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
-            </c:if>
-            <div style="display:inline;" class="ptr" onmouseover="showMenu('styleEdit', -40, 10);">
-              <tag:img png="theme" title="header.changeTheme"/>
-              <div id="styleEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
-                <a class="ptr" id="stylesheet1">Default ScadaBR Theme </a><br/>
-                <a class="ptr" id="stylesheet2">Modern ScadaBR Theme</a><br/>
+            
+          <tag:img id="userMutedImg" onclick="MiscDwr.toggleUserMuted(setUserMuted)" onmouseover="hideLayer('localeEdit')"/>
+          <tag:img png="house" title="header.goHomeUrl" onclick="goHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
+          <tag:img png="house_link" title="header.setHomeUrl" onclick="setHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
+          </c:if>
+          <div style="display:inline;" class="ptr" onmouseover="showMenu('styleEdit', -40, 10);">
+            <tag:img png="theme" title="header.changeTheme"/>
+            <div id="styleEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
+              <a class="ptr" id="stylesheet1">Default ScadaBR Theme </a><br/>
+              <a class="ptr" id="stylesheet2">Modern ScadaBR Theme</a><br/>
             </div>
+          </div>
+          <div style="display:inline;" class="ptr" onmouseover="showMenu('localeEdit', -40, 10);">
+            <tag:img png="world" title="header.changeLanguage"/>
+            <div id="localeEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
+              <c:forEach items="${availableLanguages}" var="lang">
+                <a class="ptr" onclick="setLocale('${lang.key}')">${lang.value}</a><br/>
+              </c:forEach>
             </div>
-            <div style="display:inline;" class="ptr" onmouseover="showMenu('localeEdit', -40, 10);">
-              <tag:img png="world" title="header.changeLanguage"/>
-              <div id="localeEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
-                <c:forEach items="${availableLanguages}" var="lang">
-                  <a class="ptr" onclick="setLocale('${lang.key}')">${lang.value}</a><br/>
-                </c:forEach>
-              </div>
-            </div>
+          </div>  
+          <tag:menuItem href="logout.htm" png="control_stop_blue" key="header.logout"/>
+        </div>
+        <div>
+          <c:if test="${empty sessionUser}">
+            <tag:menuItem href="login.htm" png="control_play_blue" key="header.login"/>
+          </c:if>  
+          <c:if test="${!empty sessionUser}">
+            <span class="copyTitle"><fmt:message key="header.user"/>:</span>
+            <span class="userName"><b>${sessionUser.username}</b></span>
+          </c:if>
+          <div id="headerMenuDescription" class="labelDiv" style="position:absolute;display:none;"></div>
+        </div>
       </div>
 
     </div>
@@ -207,6 +215,9 @@
   <c:if test="${!simple}">
   <div class="side-menu" id="Scada-menu">
     <c:if test="${!empty sessionUser}">
+      <div class="toggle-nav-button">
+          <span onclick="toggleNav()">&#9776;</span>
+      </div>
       <ul>
         <li><tag:menuItem href="watch_list.shtm" png="eye" key="header.watchlist"/></li>
         <li><tag:menuItem href="views.shtm" png="icon_view" key="header.views"/></li>
@@ -238,7 +249,6 @@
       </c:if>
       <ul>
         <li><tag:menuItem href="users.shtm" png="user" key="header.users"/></li>
-        <li><tag:menuItem href="logout.htm" png="control_stop_blue" key="header.logout"/></li>
         <li><tag:menuItem href="help.shtm" png="help" key="header.help"/></li>
       </ul>
     </c:if>
