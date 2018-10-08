@@ -45,6 +45,7 @@ html {
             bottom: 0;
             padding: 12px;
             color: white;
+            text-align: center;
             background-color: $primary_color_dark;
         }
     }
@@ -136,6 +137,7 @@ $menu-width: 75px;
             a {
                 display: flex;
                 align-items: center;
+                color: white;
                 
                 .menuitem-text {
                     display: none;
@@ -181,6 +183,42 @@ $menu-width: 75px;
             display: none;
         }
     }
+}
+
+.login-box {
+    min-height: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        justify-content: center;
+
+        padding: 20px;
+        margin: 0 25%;
+        border: solid black 1px;
+        border-radius: 13px;
+    }
+
+    .form-box {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+
+        label {
+            margin: 10px 0 5px 0;
+            width: 100%;
+        }
+    }
+
 }
 
 

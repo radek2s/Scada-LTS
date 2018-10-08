@@ -23,7 +23,7 @@
   <!-- Style -->
   <link rel="icon" href="images/favicon.ico"/>
   <link rel="shortcut icon" href="images/favicon.ico"/>
-  <link rel="stylesheet" type="text/css" href="resources/main.css">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
 
   <!-- <link id="pagestyle" href="assets/common_deprecated.css" type="text/css" rel="stylesheet"/> -->
   <!-- <link id="pagestyle" href="assets/main.css" type="text/css" rel="stylesheet"/> -->
@@ -101,23 +101,6 @@
         localStorage.setItem('theme', sheet);
       }
 
-      function initate() {
-
-        var theme = localStorage.getItem('theme');
-        if (theme) {
-            document.getElementById("pagestyle").setAttribute("href", theme);
-        }
-
-        var style1 = document.getElementById("stylesheet1");
-        var style2 = document.getElementById("stylesheet2");
-
-        style1.onclick = function () { swapStyleSheet("assets/common_deprecated.css") };
-        style2.onclick = function () { swapStyleSheet("assets/common.css") };
-      }
-
-      window.onload = initate;
-
-
       var opened = false;
       function toggleNav() {
         var x = document.getElementsByClassName("menuitem-text");
@@ -152,7 +135,7 @@
     <div class="main-menu" id="Scada-header">
       <div class="logo-box">
         <div>
-          <img id="logo" src="assets/logo.png" alt="Logo"/>
+          <img id="logo" src="assets/logo.png" alt="Logo" onclick="goHomeUrl()"/>
         </div>
       </div>
 
@@ -177,16 +160,9 @@
           <c:if test="${!empty sessionUser}">
             
           <tag:img id="userMutedImg" onclick="MiscDwr.toggleUserMuted(setUserMuted)" onmouseover="hideLayer('localeEdit')"/>
-          <tag:img png="house" title="header.goHomeUrl" onclick="goHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
           <tag:img png="house_link" title="header.setHomeUrl" onclick="setHomeUrl()" onmouseover="hideLayer('localeEdit')"/>
           </c:if>
-          <div style="display:inline;" class="ptr" onmouseover="showMenu('styleEdit', -40, 10);">
-            <tag:img png="theme" title="header.changeTheme"/>
-            <div id="styleEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
-              <a class="ptr" id="stylesheet1">Default ScadaBR Theme </a><br/>
-              <a class="ptr" id="stylesheet2">Modern ScadaBR Theme</a><br/>
-            </div>
-          </div>
+          
           <div style="display:inline;" class="ptr" onmouseover="showMenu('localeEdit', -40, 10);">
             <tag:img png="world" title="header.changeLanguage"/>
             <div id="localeEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
