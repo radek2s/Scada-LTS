@@ -615,7 +615,122 @@
 
     		window.setInterval(saveDivHeightsToCookieOnChange, 2000);
    	  	})(jQuery);
-   	  });
+
+
+             
+   	});
+
+    var ch1d;
+    var myChart;
+    function initNewChart(){
+
+        var e = document.getElementById("time_offset");
+        var f = document.getElementById("dp_xid_input").value;
+        var strUser = e.options[e.selectedIndex].value;
+
+        var multi = 1;
+
+        var selected_time = strUser.split("_");
+        if (selected_time[0] == "min") {
+            multi = 60000;
+        } else if (selected_time[0] == "hour") {
+            multi = 3600000;
+        } else {
+            multi = 86400000;
+        }
+
+        var timestamp = Date.now() - parseInt(selected_time[1]) * multi;
+        console.log(timestamp);
+
+        ch1d = getChartAPIData(timestamp, f);
+
+
+        var ctx = document.getElementById("myChart");
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ch1d.labels,
+                datasets: [ch1d.dataset]
+            },
+            options: {
+                elements: {
+                    line: {
+                        tension: 0,
+                        }                    
+                    }
+                }
+            }); 
+
+        updateNewChart(f);
+
+           
+
+    }
+
+    function getChartAPIData(timestamp,dp_xid) {
+        var chartJSdata = {
+            labels: [],
+            dataset: {
+                label: "",
+                data: []
+            },
+            lastTimestamp: ""
+            
+        };
+        jQuery.ajax({
+            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValuesFromTime/"+timestamp+"/"+dp_xid,
+            complete: function(data){},
+            success: function(data){
+                var obj = jQuery.parseJSON(data);
+                chartJSdata.dataset.label = obj.xid;
+                chartJSdata.lastTimestamp = obj.values[obj.values.length-1].ts;
+                obj.values.forEach(function(entry) {
+                    entry.ts = new Date(entry.ts);
+                    chartJSdata.labels.push(entry.ts.toUTCString())
+                    chartJSdata.dataset.data.push(entry.value)
+                });
+            }
+        })
+        return chartJSdata;
+    }
+
+    function updateNewChart(dp_xid) {
+        jQuery.ajax({
+            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValue/"+dp_xid,
+            complete: function(data){},
+            success: function(data){
+                var obj = jQuery.parseJSON(data);
+                console.log(parseInt(obj.ts) + "C.TS");
+                if (parseInt(obj.ts) > parseInt(ch1d.lastTimestamp)) {
+                    ch1d.lastTimestamp = obj.ts;
+                    addChartData(myChart,new Date(obj.ts).toUTCString(),obj.value);
+                }
+                
+            }
+        })
+
+        setTimeout(function() { updateNewChart(dp_xid); }, 5000);
+    }
+
+
+    function addChartData(chart, label, data) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+
+    // var ch1d = getChartAPIData("1020212","DP_307072");
+    // var ch2d = getChartAPIData("1020212","DP_578341");
+    // 1540573622
+
+
+
+         
+    
+
+    
     </script>
 
     <table width="100%">
@@ -726,6 +841,28 @@
     </td></tr>
 
     <tr><td>
+            <div>LiveChart</div>
+            <div>
+                <select id="time_offset" form="carform">
+                    <option value="min_1">60 seconds</option>
+                    <option value="min_10">10 minutes</option>
+                    <option value="min_30">30 minutes</option>
+                    <option value="min_60" selected>1 hour</option>
+                    <option value="hour_3">3 hours</option>
+                    <option value="hour_6">6 hours</option>
+                    <option value="hour_12">12 hours</option>
+                    <option value="hour_24">1 day</option>
+                    <option value="day_2">2 days</option>
+                    <option value="day_7">7 days</option>
+                </select>
+                <input id="dp_xid_input" type="text"/>
+                <button onclick="initNewChart()">Render</button>
+            </div>
+            <canvas id="myChart" width="400" height="200"></canvas>
+            <script>
+   
+            </script>
+            <!-- CHART -->
       <div id="chartContainer" class="borderDiv" style="width: 100%; resize: vertical; overflow: hidden; height: 500px;">
         <table width="100%">
           <tr>
