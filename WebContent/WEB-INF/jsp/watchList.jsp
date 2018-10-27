@@ -620,26 +620,35 @@
              
    	});
 
-    var ch1d;
-    var myChart;
-    function initNewChart(){
+    function multiTime(optionValue) {
 
-        var e = document.getElementById("time_offset");
-        var f = document.getElementById("dp_xid_input").value;
-        var strUser = e.options[e.selectedIndex].value;
-
-        var multi = 1;
-
-        var selected_time = strUser.split("_");
-        if (selected_time[0] == "min") {
-            multi = 60000;
-        } else if (selected_time[0] == "hour") {
-            multi = 3600000;
+        var timeBlock = optionValue.split("_");
+        if (timeBlock[0] == "sec") {
+            return 1000 * parseInt(timeBlock[1]);
+        } else if (timeBlock[0] == "min") {
+            return 60000 * parseInt(timeBlock[1]);
+        } else if (timeBlock[0] == "hour") {
+            return 3600000 * parseInt(timeBlock[1]);
         } else {
-            multi = 86400000;
+            return 86400000 * parseInt(timeBlock[1]);
         }
 
-        var timestamp = Date.now() - parseInt(selected_time[1]) * multi;
+    }
+
+    var ch1d;
+    var myChart;
+    var z = document.getElementById("time_refresh");
+    var refreshTime = z.options[e.selectedIndex].value;
+/*    function initNewChart(){
+
+        var e = document.getElementById("time_offset");
+        
+        var f = document.getElementById("dp_xid_input").value;
+        var strUser = e.options[e.selectedIndex].value;
+        
+
+
+        var timestamp = Date.now() - multiTime(strUser);
         console.log(timestamp);
 
         ch1d = getChartAPIData(timestamp, f);
@@ -666,6 +675,51 @@
            
 
     }
+    */
+
+    var data_chartJS;
+    var SECOND  = 1000;
+    var MINUTE  = 60000;
+    var HOUR    = 3600000;
+    var DAY     = 86400000;
+
+
+
+
+    function initNewChart(){
+        
+        data_chartJS = {
+            labels: [],
+            datasets: [],
+            fill: false
+        };
+        
+        var e = document.getElementById("time_offset");
+        var f = document.getElementById("dp_xid_input").value;
+        var strUser = e.options[e.selectedIndex].value;
+        var timestamp = Date.now() - multiTime(strUser);
+        
+        var pointList = getChartPointList();
+        for(var i = 0; i < pointList.length; i++) {
+            data_chartJS.datasets[i] = {};
+            loadDataFromApi(timestamp,pointList[i],i);
+        }
+        
+        var ctx = document.getElementById("myChart");
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: data_chartJS,
+
+        });
+
+
+        // refreshChart();
+        // loadNewChart();
+
+        // setTimeout(function() {initNewChart();}, 10000);
+
+    }
+
 
     function getChartAPIData(timestamp,dp_xid) {
         var chartJSdata = {
@@ -694,13 +748,132 @@
         return chartJSdata;
     }
 
+    function aproximateDataMinutes(values, count) {
+
+        var labels  = [];
+        var now     = new Date();
+        var retrunObject = {
+            labels: [],
+            dataset: []
+        }
+
+        values.forEach(value => {
+            value.ts = new Date(value.ts).getMinutes().toString();
+            
+            if (labels[value.ts] === undefined) {
+                labels[value.ts] = parseFloat(value.value);
+            } else {
+                labels[value.ts] = (labels[value.ts] + parseFloat(value.value)/2);
+            }
+        });
+
+        var minutesLabel = now.getMinutes();
+        for (var x = count; x > 0; x--) {
+            retrunObject.labels.unshift(minutesLabel.toString())
+            if (labels[minutesLabel] === undefined) {
+                labels[minutesLabel] = 0;
+                retrunObject.dataset.unshift(0);
+            } else {
+                retrunObject.dataset.unshift(labels[minutesLabel])
+            }
+            minutesLabel = minutesLabel - 1;
+            if (minutesLabel < 0) {
+                minutesLabel = minutesLabel + 60;
+            }
+
+        }
+
+        return retrunObject;
+        
+    }
+
+    function splitToDays7(values) {
+
+        var today = new Date();
+        var dates = [];
+        // console.log(dates);
+        values.forEach(value => {
+            value.ts = new Date(value.ts).toLocaleDateString("en-US");
+            if (dates[value.ts] === undefined) {
+                dates[value.ts] = parseFloat(value.value);
+            } else {
+                dates[value.ts] = (dates[value.ts] + parseFloat(value.value))/2;
+            }
+            
+
+        });
+        var day = 86400000; //day in timestamp
+        var date_string = today.toLocaleDateString("en-US");
+        // console.log(date_string);
+        var returnData = {
+            labels: [],
+            dataset:[],
+        }
+        returnData.labels.unshift(date_string);
+        if (dates[date_string] === undefined) {
+            dates[date_string] = 0;
+            returnData.dataset.unshift(0);
+        } else {
+            returnData.dataset.unshift(dates[date_string])
+        }
+        for (var o = 6; o > 0; o--) {
+            today = new Date(today - day);
+            date_string = today.toLocaleDateString("en-US");
+            returnData.labels.unshift(date_string);
+            if (dates[date_string] === undefined) {
+                dates[date_string] = 0;
+                returnData.dataset.unshift(0);
+            } else {
+                returnData.dataset.unshift(dates[date_string])
+            }
+
+        }
+
+
+        return returnData;
+
+    }
+
+    function loadDataFromApi(timestamp, dp_id,i) {
+
+        jQuery.ajax({
+            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValuesFromTime/id/"+timestamp+"/"+dp_id,
+            complete: function(data){},
+            success: function(data){
+                var chartData;
+                var obj = jQuery.parseJSON(data);
+                var LINE_COLOURS = [
+                    "#22bd3c",
+                    "#bd7722",
+                    "#bd22b0",
+                    "#0b43bd",
+                    "#0bc218",
+                    "#bd760b"
+                ];
+                // chartData = splitToDays7(obj.values);
+                chartData = aproximateDataMinutes(obj.values, 10);
+
+
+                
+                data_chartJS.labels = chartData.labels;
+                data_chartJS.datasets[i].data = chartData.dataset;
+                data_chartJS.datasets[i].backgroundColor = LINE_COLOURS[i];
+                data_chartJS.datasets[i].borderColor = LINE_COLOURS[i];
+                data_chartJS.datasets[i].label = obj.xid;
+                data_chartJS.datasets[i].fill = false;
+                
+            }
+        });
+        
+    }
+
     function updateNewChart(dp_xid) {
         jQuery.ajax({
             url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValue/"+dp_xid,
             complete: function(data){},
             success: function(data){
                 var obj = jQuery.parseJSON(data);
-                console.log(parseInt(obj.ts) + "C.TS");
+                
                 if (parseInt(obj.ts) > parseInt(ch1d.lastTimestamp)) {
                     ch1d.lastTimestamp = obj.ts;
                     addChartData(myChart,new Date(obj.ts).toUTCString(),obj.value);
@@ -709,7 +882,7 @@
             }
         })
 
-        setTimeout(function() { updateNewChart(dp_xid); }, 5000);
+        setTimeout(function() { updateNewChart(dp_xid); }, multiTime(refreshTime));
     }
 
 
@@ -721,16 +894,11 @@
         chart.update();
     }
 
-    // var ch1d = getChartAPIData("1020212","DP_307072");
-    // var ch2d = getChartAPIData("1020212","DP_578341");
-    // 1540573622
+    var label_sec_60 = ["60", "55", "45", "40", "35", "30", "25", "20", "15", "10", "5", "0"]; //12
+    var label_min_10 = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1"]; //10
+    var label_min_30 = ["30","25", "20", "15", "10", "5", "0"]; //7
+    var label_min_60 = label_sec_60;
 
-
-
-         
-    
-
-    
     </script>
 
     <table width="100%">
@@ -843,6 +1011,7 @@
     <tr><td>
             <div>LiveChart</div>
             <div>
+                <span>Begining time: </span>
                 <select id="time_offset" form="carform">
                     <option value="min_1">60 seconds</option>
                     <option value="min_10">10 minutes</option>
@@ -855,8 +1024,22 @@
                     <option value="day_2">2 days</option>
                     <option value="day_7">7 days</option>
                 </select>
+                <span> ago</span>
                 <input id="dp_xid_input" type="text"/>
                 <button onclick="initNewChart()">Render</button>
+            </div>
+            <div>
+                <span>Refresh time:</span>
+                <select id="time_refresh">
+                    <option value="sec_1">1 second</option>
+                    <option value="sec_5">5 seconds</option>
+                    <option value="sec_10" selected>10 seconds</option>
+                    <option value="sec_30">30 seconds</option>
+                    <option value="min_1">1 minute</option>
+                    <option value="min_2">2 minutes</option>
+                    <option value="min_5">5 minutes</option>
+                    <option value="min_10">10 minutes</option>
+                </select>
             </div>
             <canvas id="myChart" width="400" height="200"></canvas>
             <script>
