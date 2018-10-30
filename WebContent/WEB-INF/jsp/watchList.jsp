@@ -60,8 +60,13 @@
       var pointNames = {};
       var watchlistChangeId = 0;
       var isChartLive = false;
+      var webLocation;
 
       function init() {
+          webLocation = window.location.protocol 
+            + "//" + window.location.host 
+            + "/" + window.location.pathname.split("/")[1] + "/";
+
           WatchListDwr.init(function(data) {
               mango.share.users = data.shareUsers;
 
@@ -620,68 +625,93 @@
              
    	});
 
-    function multiTime(optionValue) {
+    /** ChartJS section **/
 
-        var timeBlock = optionValue.split("_");
-        if (timeBlock[0] == "sec") {
-            return 1000 * parseInt(timeBlock[1]);
-        } else if (timeBlock[0] == "min") {
-            return 60000 * parseInt(timeBlock[1]);
-        } else if (timeBlock[0] == "hour") {
-            return 3600000 * parseInt(timeBlock[1]);
-        } else {
-            return 86400000 * parseInt(timeBlock[1]);
-        }
-
-    }
-
-    var ch1d;
-    var myChart;
-    var z = document.getElementById("time_refresh");
-    var refreshTime = z.options[e.selectedIndex].value;
-/*    function initNewChart(){
-
-        var e = document.getElementById("time_offset");
-        
-        var f = document.getElementById("dp_xid_input").value;
-        var strUser = e.options[e.selectedIndex].value;
-        
-
-
-        var timestamp = Date.now() - multiTime(strUser);
-        console.log(timestamp);
-
-        ch1d = getChartAPIData(timestamp, f);
-
-
-        var ctx = document.getElementById("myChart");
-        myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ch1d.labels,
-                datasets: [ch1d.dataset]
-            },
-            options: {
-                elements: {
-                    line: {
-                        tension: 0,
-                        }                    
-                    }
-                }
-            }); 
-
-        updateNewChart(f);
-
-           
-
-    }
-    */
-
-    var data_chartJS;
+    /** --- Variable Section --- **/
     var SECOND  = 1000;
     var MINUTE  = 60000;
     var HOUR    = 3600000;
     var DAY     = 86400000;
+
+    var data_chartJS;
+
+    var myChart;
+    var z = document.getElementById("time_refresh");
+    var refreshTime = z.options[e.selectedIndex].value;
+
+    
+
+    function multiTime(optionValue) {
+
+        var timeBlock = optionValue.split("_");
+        if (timeBlock[0] == "sec") {
+            return SECOND * parseInt(timeBlock[1]);
+        } else if (timeBlock[0] == "min") {
+            return MINUTE * parseInt(timeBlock[1]);
+        } else if (timeBlock[0] == "hour") {
+            return HOUR * parseInt(timeBlock[1]);
+        } else {
+            return DAY * parseInt(timeBlock[1]);
+        }
+
+    }
+
+    /** Data Download from API **/
+
+    function loadDataFromApi(timestamp, dp_id,i) {
+
+        var e = document.getElementById("time_offset");
+        var strUser = e.options[e.selectedIndex].value;
+        
+        jQuery.ajax({
+            url: webLocation + "api/point_value/getValuesFromTime/id/"+timestamp+"/"+dp_id,
+            complete: function(data){},
+            success: function(data){
+                var chartData;
+                var obj = jQuery.parseJSON(data);
+                var LINE_COLOURS = ["#22bd3c","#bd7722","#bd22b0","#0b43bd","#0bc218","#bd760b"];
+        
+                if (strUser === "min_10") {
+                    chartData = aproximateDataMinutes(obj.values, 10);
+                } else if (strUser === "min_30"){
+                    chartData = aproximateDataMinutes(obj.values, 30);
+                } else {
+                    chartData = splitToDays7(obj.values);
+                }
+                
+                data_chartJS.labels = chartData.labels;
+                data_chartJS.datasets[i].data = chartData.dataset;
+                data_chartJS.datasets[i].backgroundColor = LINE_COLOURS[i];
+                data_chartJS.datasets[i].borderColor = LINE_COLOURS[i];
+                data_chartJS.datasets[i].label = obj.name;
+                data_chartJS.datasets[i].fill = false;
+        
+            }
+        });
+
+    }
+
+    var temp;
+    function refreshDataFromApi(dp_id,i) {
+
+
+        jQuery.ajax({
+            url: webLocation + "api/point_value/getValue/id/" + dp_id,
+            complete: function(data){},
+            success: function(data){
+                var obj = jQuery.parseJSON(data);
+                temp.labels = new Date(obj.ts).getMinutes().toString();
+                temp.datasets[i] = {data:[]}
+                temp.datasets[i].data.push(obj.value);
+            }
+        })
+
+    }
+
+
+
+    
+    
 
 
 
@@ -695,7 +725,7 @@
         };
         
         var e = document.getElementById("time_offset");
-        var f = document.getElementById("dp_xid_input").value;
+        
         var strUser = e.options[e.selectedIndex].value;
         var timestamp = Date.now() - multiTime(strUser);
         
@@ -704,48 +734,21 @@
             data_chartJS.datasets[i] = {};
             loadDataFromApi(timestamp,pointList[i],i);
         }
-        
-        var ctx = document.getElementById("myChart");
-        myChart = new Chart(ctx, {
-            type: 'line',
-            data: data_chartJS,
-
-        });
-
-
-        // refreshChart();
-        // loadNewChart();
-
-        // setTimeout(function() {initNewChart();}, 10000);
-
+        initCHT();
     }
 
+    function initCHT() {
 
-    function getChartAPIData(timestamp,dp_xid) {
-        var chartJSdata = {
-            labels: [],
-            dataset: {
-                label: "",
-                data: []
-            },
-            lastTimestamp: ""
-            
-        };
-        jQuery.ajax({
-            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValuesFromTime/"+timestamp+"/"+dp_xid,
-            complete: function(data){},
-            success: function(data){
-                var obj = jQuery.parseJSON(data);
-                chartJSdata.dataset.label = obj.xid;
-                chartJSdata.lastTimestamp = obj.values[obj.values.length-1].ts;
-                obj.values.forEach(function(entry) {
-                    entry.ts = new Date(entry.ts);
-                    chartJSdata.labels.push(entry.ts.toUTCString())
-                    chartJSdata.dataset.data.push(entry.value)
-                });
-            }
-        })
-        return chartJSdata;
+        if ( data_chartJS.labels.length !== 0) {
+            var ctx = document.getElementById("myChart");
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: data_chartJS,
+            });
+        } else {
+            setTimeout(function() {initCHT();}, 1000);
+        }
+
     }
 
     function aproximateDataMinutes(values, count) {
@@ -834,70 +837,60 @@
 
     }
 
-    function loadDataFromApi(timestamp, dp_id,i) {
+   
 
-        jQuery.ajax({
-            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValuesFromTime/id/"+timestamp+"/"+dp_id,
-            complete: function(data){},
-            success: function(data){
-                var chartData;
-                var obj = jQuery.parseJSON(data);
-                var LINE_COLOURS = [
-                    "#22bd3c",
-                    "#bd7722",
-                    "#bd22b0",
-                    "#0b43bd",
-                    "#0bc218",
-                    "#bd760b"
-                ];
-                // chartData = splitToDays7(obj.values);
-                chartData = aproximateDataMinutes(obj.values, 10);
+    function updateChartNew() {
 
-
-                
-                data_chartJS.labels = chartData.labels;
-                data_chartJS.datasets[i].data = chartData.dataset;
-                data_chartJS.datasets[i].backgroundColor = LINE_COLOURS[i];
-                data_chartJS.datasets[i].borderColor = LINE_COLOURS[i];
-                data_chartJS.datasets[i].label = obj.xid;
-                data_chartJS.datasets[i].fill = false;
-                
+        for ( var x = 0; x < getChartPointList().length; x++) {
+            if (temp.datasets[x] === undefined) {
+                console.log("Empty!");
+                return 0;
             }
-        });
+        }
+        console.log("Finished");
+        lastIndex = myChart.data.labels.length-1
+        if (myChart.data.labels[lastIndex] === temp.labels) {
+            for (var x = 0; x < myChart.data.datasets.length; x++) {
+                myChart.data.datasets[x].data[lastIndex] = (Number(myChart.data.datasets[x].data[lastIndex]) + parseFloat(temp.datasets[x].data[0])) / 2;
+            }
+        } else {
+            myChart.data.labels.push(temp.labels);
+            myChart.data.labels.shift();
+            for (var x = 0; x < myChart.data.datasets.length; x++) {
+                myChart.data.datasets[x].data.push(
+                    temp.datasets[x].data[0]
+                )
+                myChart.data.datasets[x].data.shift();
+            }
+        }
+
         
+        myChart.update();
+        return 1;
+            
     }
 
-    function updateNewChart(dp_xid) {
-        jQuery.ajax({
-            url: "http://localhost:8080/Scada-LTS-0.9.1/api/point_value/getValue/"+dp_xid,
-            complete: function(data){},
-            success: function(data){
-                var obj = jQuery.parseJSON(data);
-                
-                if (parseInt(obj.ts) > parseInt(ch1d.lastTimestamp)) {
-                    ch1d.lastTimestamp = obj.ts;
-                    addChartData(myChart,new Date(obj.ts).toUTCString(),obj.value);
-                }
-                
-            }
-        })
+    function initChartUpdate() {
 
-        setTimeout(function() { updateNewChart(dp_xid); }, multiTime(refreshTime));
+        temp = {
+            labels: [],
+            datasets: [],
+            fill: false
+        };
+        var pointList = getChartPointList();
+        for(var i = 0; i < pointList.length; i++){
+            refreshDataFromApi(pointList[i],i);
+        }
+
+        if (updateChartNew() === 0) {
+            console.log("Update");
+            setTimeout(function() {updateChartNew();},1000);
+        }
+
+        setTimeout(function(){initChartUpdate();}, 25000);
+
+
     }
-
-
-    function addChartData(chart, label, data) {
-        chart.data.labels.push(label);
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data.push(data);
-        });
-        chart.update();
-    }
-
-    var label_sec_60 = ["60", "55", "45", "40", "35", "30", "25", "20", "15", "10", "5", "0"]; //12
-    var label_min_10 = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1"]; //10
-    var label_min_30 = ["30","25", "20", "15", "10", "5", "0"]; //7
-    var label_min_60 = label_sec_60;
 
     </script>
 
@@ -1011,21 +1004,12 @@
     <tr><td>
             <div>LiveChart</div>
             <div>
-                <span>Begining time: </span>
+                <span>Time: </span>
                 <select id="time_offset" form="carform">
-                    <option value="min_1">60 seconds</option>
-                    <option value="min_10">10 minutes</option>
+                    <option value="min_10" selected>10 minutes</option>
                     <option value="min_30">30 minutes</option>
-                    <option value="min_60" selected>1 hour</option>
-                    <option value="hour_3">3 hours</option>
-                    <option value="hour_6">6 hours</option>
-                    <option value="hour_12">12 hours</option>
-                    <option value="hour_24">1 day</option>
-                    <option value="day_2">2 days</option>
                     <option value="day_7">7 days</option>
                 </select>
-                <span> ago</span>
-                <input id="dp_xid_input" type="text"/>
                 <button onclick="initNewChart()">Render</button>
             </div>
             <div>
@@ -1040,6 +1024,7 @@
                     <option value="min_5">5 minutes</option>
                     <option value="min_10">10 minutes</option>
                 </select>
+                <button onclick="initChartUpdate()">StartLiveChart</button>
             </div>
             <canvas id="myChart" width="400" height="200"></canvas>
             <script>
