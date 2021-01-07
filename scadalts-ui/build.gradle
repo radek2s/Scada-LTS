@@ -15,26 +15,26 @@ task bundle(type: NpmTask, dependsOn: npmInstall) {
 }
 
 task clearResources(type: Delete, dependsOn: bundle) {
-    delete files ("../WebContent/resources/js-ui")
+    delete files ("../src/main/webapp/resources/js-ui")
 }
 
 task copyNewUiCss(type: Copy, dependsOn: clearResources) {
     from "dist/css"
     include "*.css"
-    into "../WebContent/resources/js-ui/app/css"
+    into "../src/main/webapp/resources/js-ui/app/css"
 }
 
 task copyNewUiJs(type: Copy, dependsOn: copyNewUiCss) {
     from "dist/js/app.js" , "dist/js/chunk-vendors.js"
-    into "../WebContent/resources/js-ui/app/js"
+    into "../src/main/webapp/resources/js-ui/app/js"
 }
 
 task copyNewUiFonts(type: Copy, dependsOn: copyNewUiJs) {
     from "dist/fonts"
-    into "../WebContent/resources/js-ui/app/fonts"
+    into "../src/main/webapp/resources/js-ui/app/fonts"
 }
 
 task copyNewUiImages(type: Copy, dependsOn: copyNewUiFonts) {
     from "dist/resources"
-    into "../WebContent/resources"
+    into "../src/main/webapp/resources"
 }

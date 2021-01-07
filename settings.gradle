@@ -8,5 +8,5 @@
  * controls to the classic application.
  */
 
-rootProject.name = 'Scada-LTS'
+rootProject.name = 'Scada-LTS Reforged'
 include ':scadalts-ui'
