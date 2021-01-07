@@ -24,12 +24,26 @@
   <script type="text/javascript" src="resources/wz_jsgraphics.js"></script>
   <script type="text/javascript" src="resources/shortcut.js"></script>
   <script type="text/javascript" src="resources/customClientScripts/customView.js"></script>
+  <link href="resources/js-ui/app/css/chunk-vendors.css" rel="stylesheet" type="text/css">
+  <link href="resources/js-ui/app/css/app.css" rel="stylesheet" type="text/css">
   <link
-	href="resources/app/bower_components/sweetalert2/dist/sweetalert2.min.css"
+	href="resources/node_modules/sweetalert2/dist/sweetalert2.min.css"
 	rel="stylesheet" type="text/css">
+    <style>
+    	 table {
+             border-collapse: separate !important;
+             border-spacing: 2px !important;
+             padding: 3px;
+         }
+         .rowTable {
+             background-color: #F0F0F0;
+         }
+         .rowTableAlt {
+             background-color: #DCDCDC;
+         }
+    </style>
+    <script type="text/javascript" src="resources/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
 
-    <script type="text/javascript" src="resources/app/bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
-	
 	<script type="text/javascript">
 	
 	jQuery.noConflict();
@@ -266,5 +280,12 @@
 	</script>
 
 	<tag:displayView view="${currentView}" emptyMessageKey="views.noViews" />
+
+    <span>
+	    <div id='refresh-view' ptimeToCheckRefresh=7000 pviewId=${currentView.id}> </div>
+	</span>
+
 </tag:page>
-<%@ include file="/WEB-INF/jsp/include/tech-vuejs.jsp"%>
+<%@ include file="/WEB-INF/jsp/include/vue/vue-app.js.jsp"%>
+<%@ include file="/WEB-INF/jsp/include/vue/vue-view.js.jsp"%>
+<%@ include file="/WEB-INF/jsp/include/vue/vue-charts.js.jsp"%>

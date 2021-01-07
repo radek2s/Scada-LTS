@@ -229,8 +229,11 @@
 
   <item id="graphicalViews">
     <relation id="editingGraphicalViews"/>
+    <relation id="editingModernCharts"/>
     <relation id="watchList"/>
   </item>
+
+  <item id="editingModernCharts"/>
   
   <item id="httpReceiverPP">
     <relation id="httpReceiverDS"/>
@@ -245,8 +248,6 @@
   <item id="systemAlarmLevels"/>
   
   <item id="auditAlarmLevels"/>
-
-  <item id="systemEventExport"/>
   
   <item id="httpImageDS">
     <relation id="httpImagePP"/>
@@ -383,12 +384,15 @@
     <relation id="radiuinoDS"/>
    </item>
 
-  <item id="amqpPP">
-    <relation id="amqpDS"/>
-  </item>
+    <item id="collectInactiveMsg">
+        <relation id="emailSettings"/>
+        <relation id="eventHandlers"/>
+        <relation id="eventDetectors"/>
+        <relation id="mailingLists"/>
+    </item>
 
-  <item id="amqpDS">
-    <relation id="amqpPP"/>
+  <item id="smsEventHandlers">
+    <relation id="emailSettings"/>
+    <relation id="mailingLists"/>
   </item>
-
 </doxManifest>

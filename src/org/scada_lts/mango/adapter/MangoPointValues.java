@@ -22,6 +22,7 @@ import java.util.List;
 import com.serotonin.mango.rt.dataImage.PointValueTime;
 import com.serotonin.mango.rt.dataImage.SetPointSource;
 import com.serotonin.mango.vo.bean.LongPair;
+import org.scada_lts.dao.model.point.PointValueAdnnotation;
 
 /** 
  * Adapter for PointValuesService
@@ -30,8 +31,8 @@ import com.serotonin.mango.vo.bean.LongPair;
  * 
  */
 public interface MangoPointValues {
-	
-	long deletePointValuesBefore(int dataPointId, long time);
+
+	long deletePointValuesBeforeWithOutLast(int dataPointId, long time);
 	
 	long deletePointValues(int dataPointId);
 	

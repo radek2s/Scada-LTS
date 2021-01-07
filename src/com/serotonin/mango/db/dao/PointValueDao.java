@@ -34,14 +34,19 @@ import com.serotonin.mango.vo.bean.LongPair;
 public class PointValueDao extends BaseDao {
 	
 	private MangoPointValues pointValueService;
-	
+
 	public PointValueDao() {
-		pointValueService = new PointValueService();
+
+		initializePrivateVariables();
+
 	}
 
 	public PointValueDao(DataSource dataSource) {
-		pointValueService = new PointValueService();
+
+		initializePrivateVariables();
+
 	}
+
 
 	/**
 	 * Only the PointValueCache should call this method during runtime. Do not
@@ -118,7 +123,7 @@ public class PointValueDao extends BaseDao {
 	}
 
 	public long deletePointValuesBefore(int dataPointId, long time) {
-		return pointValueService.deletePointValuesBefore(dataPointId, time);
+		return pointValueService.deletePointValuesBeforeWithOutLast(dataPointId, time);
 	}
 
 	public long deletePointValues(int dataPointId) {
@@ -162,5 +167,9 @@ public class PointValueDao extends BaseDao {
 	public List<Long> getFiledataIds() {
 		return pointValueService.getFiledataIds();
 	}
-	
+	private void initializePrivateVariables(){
+
+		pointValueService = new PointValueService();
+
+	}
 }

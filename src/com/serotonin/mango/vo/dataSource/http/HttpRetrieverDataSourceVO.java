@@ -40,12 +40,13 @@ import com.serotonin.util.SerializationHelper;
 import com.serotonin.util.StringUtils;
 import com.serotonin.web.dwr.DwrResponseI18n;
 import com.serotonin.web.i18n.LocalizableMessage;
+import org.scada_lts.ds.model.ReactivationDs;
 
 /**
  * @author Matthew Lohbihler
  */
 @JsonRemoteEntity
-public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSourceVO> {
+public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSourceVO> implements ICheckReactivation{
     public static final Type TYPE = Type.HTTP_RETRIEVER;
 
     @Override
@@ -97,6 +98,12 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
     @JsonRemoteProperty
     private int retries = 2;
 
+    @JsonRemoteProperty
+    private boolean stop = false;
+
+    @JsonRemoteProperty
+    private ReactivationDs reactivation = new ReactivationDs();
+
     public String getUrl() {
         return url;
     }
@@ -137,6 +144,22 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
         this.retries = retries;
     }
 
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+
+    public ReactivationDs getReactivation() {
+        return reactivation;
+    }
+
+    public void setReactivation(ReactivationDs reactivation) {
+        this.reactivation = reactivation;
+    }
+
     @Override
     public void validate(DwrResponseI18n response) {
         super.validate(response);
@@ -158,6 +181,8 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
         AuditEventType.addPropertyMessage(list, "dsEdit.httpRetriever.url", url);
         AuditEventType.addPropertyMessage(list, "dsEdit.httpRetriever.timeout", timeoutSeconds);
         AuditEventType.addPropertyMessage(list, "dsEdit.httpRetriever.retries", retries);
+        AuditEventType.addPropertyMessage(list, "dsEdit.httpRetriever.stop", stop );
+        AuditEventType.addPropertyMessage(list, "dsEdit.httpRetriever.reactivation", reactivation );
     }
 
     @Override
@@ -168,6 +193,8 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
         AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.httpRetriever.timeout", from.timeoutSeconds,
                 timeoutSeconds);
         AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.httpRetriever.retries", from.retries, retries);
+        AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.httpRetriever.stop", from.stop, stop);
+        AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.httpRetriever.reactivation", from.stop, stop);
     }
 
     //
@@ -185,6 +212,8 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
         out.writeInt(updatePeriods);
         out.writeInt(timeoutSeconds);
         out.writeInt(retries);
+        out.writeBoolean(stop);
+        out.writeObject(reactivation);
     }
 
     private void readObject(ObjectInputStream in) throws IOException {
@@ -198,6 +227,16 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
             timeoutSeconds = in.readInt();
             ;
             retries = in.readInt();
+            try {
+                stop = in.readBoolean();
+            } catch (Exception e) {
+                stop = false;
+            }
+            try {
+                reactivation = (ReactivationDs) in.readObject();
+            } catch (Exception e) {
+                reactivation = new ReactivationDs(false, (short) 1,(short) 1);
+            }
         }
     }
 
@@ -213,5 +252,9 @@ public class HttpRetrieverDataSourceVO extends DataSourceVO<HttpRetrieverDataSou
     public void jsonSerialize(Map<String, Object> map) {
         super.jsonSerialize(map);
         serializeUpdatePeriodType(map, updatePeriodType);
+    }
+
+    public boolean checkToTrayEnable() {
+        return isEnabled() || isStop() || reactivation.isSleep();
     }
 }

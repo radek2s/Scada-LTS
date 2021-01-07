@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.scada_lts.utils.PlcAlarmsUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -40,6 +41,7 @@ import com.mysql.jdbc.Statement;
 import com.serotonin.mango.rt.event.type.EventType;
 import com.serotonin.mango.vo.DataPointVO;
 
+
 /**
  * DAO for DataPoint
  *
@@ -54,8 +56,10 @@ public class DataPointDAO {
 	private static final String COLUMN_NAME_XID = "xid";
 	private static final String COLUMN_NAME_DATA_SOURCE_ID = "dataSourceId";
 	private static final String COLUMN_NAME_DATA = "data";
+	private static final String COLUMN_NAME_PLC_ALARM_LEVEL = "plcAlarmLevel";
 
 	private static final String COLUMN_NAME_DS_NAME = "name";
+	private static final String COLUMN_NAME_DATAPOINT_NAME = "pointName";
 	private static final String COLUMN_NAME_DS_ID = "id";
 	private static final String COLUMN_NAME_DS_XID = "xid";
 	private static final String COLUMN_NAME_DS_DATA_SOURCE_TYPE = "dataSourceType";
@@ -77,6 +81,16 @@ public class DataPointDAO {
 				+ "ds." + COLUMN_NAME_DS_ID + "="
 				+ "dp." + COLUMN_NAME_DATA_SOURCE_ID + " ";
 
+	private static final String DATA_POINT_SELECT_PLC = "" +
+			"SELECT " +
+			"dp." + COLUMN_NAME_ID + ", " +
+			"dp." + COLUMN_NAME_XID + ", " +
+			"dp." + COLUMN_NAME_DATA_SOURCE_ID + ", " +
+			"dp." + COLUMN_NAME_DATA + ", " +
+			"dp." + COLUMN_NAME_DATAPOINT_NAME + ", " +
+			"dp." + COLUMN_NAME_PLC_ALARM_LEVEL + " " +
+			"FROM dataPoints dp ";
+
 	private static final String DATA_POINT_SELECT_ID = ""
 			+ "select DISTINCT "
 				+ COLUMN_NAME_ID + " "
@@ -86,13 +100,18 @@ public class DataPointDAO {
 	private static final String DATA_POINT_INSERT = ""
 			+ "insert into dataPoints ("
 				+ COLUMN_NAME_XID + ", "
+				+ COLUMN_NAME_DATAPOINT_NAME + ", "
 				+ COLUMN_NAME_DATA_SOURCE_ID + ", "
-				+ COLUMN_NAME_DATA + ") "
-			+ "values (?,?,?) ";
+				+ COLUMN_NAME_DATA + ", "
+				+ COLUMN_NAME_PLC_ALARM_LEVEL
+			+ ") "
+			+ "values (?,?,?,?,?) ";
 
 	private static final String DATA_POINT_UPDATE = ""
 			+ "update dataPoints set "
+				+ COLUMN_NAME_PLC_ALARM_LEVEL + "=?, "
 				+ COLUMN_NAME_XID + "=?, "
+				+ COLUMN_NAME_DATAPOINT_NAME + "=?, "
 				+ COLUMN_NAME_DATA + "=? "
 			+ "where "
 				+ COLUMN_NAME_ID + "=? ";
@@ -125,6 +144,23 @@ public class DataPointDAO {
 			dataPoint.setDataSourceName(resultSet.getString(COLUMN_NAME_DS_NAME));
 			dataPoint.setDataSourceTypeId(resultSet.getInt(COLUMN_NAME_DS_DATA_SOURCE_TYPE));
 			
+			return dataPoint;
+		}
+	}
+
+	private class DataPointSimpleRowMapper implements RowMapper<DataPointVO> {
+
+
+		@Override
+		public DataPointVO mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+
+			DataPointVO dataPoint = (DataPointVO) new SerializationData().readObject(resultSet.getBlob(COLUMN_NAME_DATA).getBinaryStream());
+
+			dataPoint.setId(resultSet.getInt(COLUMN_NAME_ID));
+			dataPoint.setXid(resultSet.getString(COLUMN_NAME_XID));
+			dataPoint.setDataSourceId(resultSet.getInt(COLUMN_NAME_DATA_SOURCE_ID));
+			dataPoint.setName(resultSet.getString(COLUMN_NAME_DATAPOINT_NAME));
+
 			return dataPoint;
 		}
 	}
@@ -196,6 +232,14 @@ public class DataPointDAO {
 		return dataPointList;
 	}
 
+	public List<DataPointVO> getPlcDataPoints(int dataSourceId) {
+
+		String templateSelectPlcWhereId = DATA_POINT_SELECT_PLC + " where (dp." + COLUMN_NAME_DATA_SOURCE_ID + "=? AND dp.plcAlarmLevel>0)";
+		List<DataPointVO> dataPointList = DAO.getInstance().getJdbcTemp().query(templateSelectPlcWhereId, new Object[] {dataSourceId}, new DataPointSimpleRowMapper());
+		return dataPointList;
+
+	}
+
 	public List<Integer> getDataPointsIds(int dataSourceId) {
 
 		if (LOG.isTraceEnabled()) {
@@ -220,8 +264,10 @@ public class DataPointDAO {
 				PreparedStatement ps = connection.prepareStatement(DATA_POINT_INSERT, Statement.RETURN_GENERATED_KEYS);
 				new ArgumentPreparedStatementSetter(new Object[] {
 						dataPoint.getXid(),
+						dataPoint.getName(),
 						dataPoint.getDataSourceId(),
-						new SerializationData().writeObject(dataPoint)
+						new SerializationData().writeObject(dataPoint),
+						PlcAlarmsUtils.getPlcAlarmLevelByDataPointName(dataPoint.getName())
 				}).setValues(ps);
 				return ps;
 			}
@@ -238,7 +284,9 @@ public class DataPointDAO {
 		}
 
 		DAO.getInstance().getJdbcTemp().update(DATA_POINT_UPDATE, new Object[] {
+				PlcAlarmsUtils.getPlcAlarmLevelByDataPointName(dataPoint.getName()),
 				dataPoint.getXid(),
+				dataPoint.getName(),
 				new SerializationData().writeObject(dataPoint),
 				dataPoint.getId()
 		});

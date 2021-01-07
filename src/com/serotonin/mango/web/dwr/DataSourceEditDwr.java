@@ -88,9 +88,9 @@ import com.serotonin.bacnet4j.type.constructed.Address;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.db.IntValuePair;
 import com.serotonin.io.StreamUtils;
-import org.scada_lts.workdomain.datasource.amqp.AmqpDataSourceVO;
-import org.scada_lts.workdomain.datasource.amqp.AmqpPointLocatorVO;
-import org.scada_lts.workdomain.modbus.SerialParameters;
+import org.scada_lts.ds.model.ReactivationDs;
+import org.scada_lts.ds.reactivation.ReactivationManager;
+import org.scada_lts.modbus.SerialParameters;
 import com.serotonin.mango.Common;
 import com.serotonin.mango.DataTypes;
 import com.serotonin.mango.db.dao.DataPointDao;
@@ -234,6 +234,7 @@ public class DataSourceEditDwr extends DataSourceListDwr {
 	}
 
 	private DwrResponseI18n tryDataSourceSave(DataSourceVO<?> ds) {
+
 		DwrResponseI18n response = new DwrResponseI18n();
 
 		ds.validate(response);
@@ -654,7 +655,7 @@ public class DataSourceEditDwr extends DataSourceListDwr {
 
 		SerialParameters params = new SerialParameters();
 		params.setCommPortId(commPortId);
-		params.setPortOwnerName("Mango Modbus Serial Data Source Scan");
+		params.setPortOwnerName("Modbus Serial Data Source Scan");
 		params.setBaudRate(baudRate);
 		params.setFlowControlIn(flowControlIn);
 		params.setFlowControlOut(flowControlOut);
@@ -1264,7 +1265,7 @@ public class DataSourceEditDwr extends DataSourceListDwr {
 	@MethodFilter
 	public DwrResponseI18n saveHttpRetrieverDataSource(String name, String xid,
 			int updatePeriods, int updatePeriodType, String url,
-			int timeoutSeconds, int retries) {
+			int timeoutSeconds, int retries, boolean stop) {
 		HttpRetrieverDataSourceVO ds = (HttpRetrieverDataSourceVO) Common
 				.getUser().getEditDataSource();
 
@@ -1275,9 +1276,43 @@ public class DataSourceEditDwr extends DataSourceListDwr {
 		ds.setUrl(url);
 		ds.setTimeoutSeconds(timeoutSeconds);
 		ds.setRetries(retries);
+		ds.setStop(stop);
 
 		return tryDataSourceSave(ds);
 	}
+
+	@MethodFilter
+	public DwrResponseI18n saveHttpRetrieverDataSourceWithReactivationOptions(String name, String xid,
+																			  int updatePeriods, int updatePeriodType, String url,
+																			  int timeoutSeconds, int retries, boolean stop, boolean sleep, short typeReactivation, short valueReactivation) {
+		HttpRetrieverDataSourceVO ds = (HttpRetrieverDataSourceVO) Common
+				.getUser().getEditDataSource();
+
+		ds.setXid(xid);
+		ds.setName(name);
+		ds.setUpdatePeriods(updatePeriods);
+		ds.setUpdatePeriodType(updatePeriodType);
+		ds.setUrl(url);
+		ds.setTimeoutSeconds(timeoutSeconds);
+		ds.setRetries(retries);
+		ds.setStop(stop);
+		ReactivationDs rDs = new ReactivationDs(sleep, typeReactivation, valueReactivation);
+		ds.setReactivation(rDs);
+
+		DwrResponseI18n result;
+
+		if (ds.getId() > 0) {
+			ReactivationManager.getInstance().stopReactivation(ds.getId());
+		}
+		result = tryDataSourceSave(ds);
+
+		if (sleep) {
+			ReactivationManager.getInstance().startReactivation(ds.getId());
+		}
+
+		return result;
+	}
+
 
 	@MethodFilter
 	public DwrResponseI18n saveHttpRetrieverPointLocator(int id, String xid,
@@ -2754,30 +2789,5 @@ public class DataSourceEditDwr extends DataSourceListDwr {
 			String name, RadiuinoPointLocatorVO locator) {
 		return validatePoint(id, xid, name, locator, null);
 	}
-
-	// AMQP Receiver //
-    @MethodFilter
-    public DwrResponseI18n saveAmqpDataSource(String name, String xid, int updatePeriods, int updatePeriodType, int updateAttempts,
-                                                      String serverIpAddress, String serverPortNumber, String serverUsername, String serverPassword, String serverVirtualHost) {
-        AmqpDataSourceVO ds = (AmqpDataSourceVO) Common.getUser().getEditDataSource();
-
-        ds.setXid(xid);
-        ds.setName(name);
-        ds.setUpdatePeriods(updatePeriods);
-        ds.setUpdatePeriodType(updatePeriodType);
-		ds.setUpdateAttempts(updateAttempts);
-        ds.setServerIpAddress(serverIpAddress);
-        ds.setServerPortNumber(serverPortNumber);
-        ds.setServerVirtualHost(serverVirtualHost);
-        ds.setServerUsername(serverUsername);
-        ds.setServerPassword(serverPassword);
-
-	    return tryDataSourceSave(ds);
-    }
-
-    @MethodFilter
-    public DwrResponseI18n saveAmqpPointLocator(int id, String xid, String name, AmqpPointLocatorVO locator){
-	    return validatePoint(id, xid, name, locator, null);
-    }
 
 }

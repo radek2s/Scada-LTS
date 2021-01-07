@@ -18,8 +18,33 @@
 --%>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <%@page import="com.serotonin.mango.DataTypes"%>
+<link href="resources/js-ui/app/css/chunk-vendors.css" rel="stylesheet" type="text/css">
+<link href="resources/js-ui/app/css/app.css" rel="stylesheet" type="text/css">
+
+<style>
+  table {
+     border-collapse: separate !important;
+     border-spacing: 2px !important;
+  }
+</style>
 
 <script type="text/javascript">
+
+  // when end of load get data from model and set in editHttpRetriver
+
+  // share data old ui and new ui in vuejs
+
+      var editDSNewUI = {
+        id: ${dataSource.id},
+        stop: ${dataSource.stop},
+        reactivation: {
+          sleep: ${dataSource.reactivation.sleep},
+          type: ${dataSource.reactivation.type}, // 0-"Minute" 1-"Hour", 2-"Day"
+          value: ${dataSource.reactivation.value}
+        }
+      }
+
+
   function testValueParams() {
       startImageFader("valueTestImg", true);
       hide("valueTestRow");
@@ -46,12 +71,30 @@
       $set("timeTestResult", result);
   }
 
-  function saveDataSourceImpl() {
-      DataSourceEditDwr.saveHttpRetrieverDataSource($get("dataSourceName"), $get("dataSourceXid"),
-              $get("updatePeriods"), $get("updatePeriodType"), $get("url"), $get("timeoutSeconds"), $get("retries"),
-              saveDataSourceCB);
+  function saveDataSourceImplOld(){
+  DataSourceEditDwr.saveHttpRetrieverDataSource($get("dataSourceName"), $get("dataSourceXid"),
+                $get("updatePeriods"), $get("updatePeriodType"), $get("url"), $get("timeoutSeconds"), $get("retries"),
+                $get("stop"),
+                saveDataSourceCB);
   }
-  
+
+  function saveDataSourceImpl() {
+      DataSourceEditDwr.saveHttpRetrieverDataSourceWithReactivationOptions(
+                  $get("dataSourceName"),
+                  $get("dataSourceXid"),
+                  $get("updatePeriods"),
+                  $get("updatePeriodType"),
+                  $get("url"),
+                  $get("timeoutSeconds"),
+                  $get("retries"),
+                  editDSNewUI.stop,
+                  editDSNewUI.reactivation.sleep,
+                  editDSNewUI.reactivation.type,
+                  editDSNewUI.reactivation.value,
+                  saveDataSourceCB
+      );
+  }
+
   function appendPointListColumnFunctions(pointListColumnHeaders, pointListColumnFunctions) {
       pointListColumnHeaders[pointListColumnHeaders.length] = "<fmt:message key="dsEdit.httpRetriever.regex"/>";
       pointListColumnFunctions[pointListColumnFunctions.length] =
@@ -137,6 +180,14 @@
           <td class="formLabelRequired"><fmt:message key="dsEdit.httpRetriever.retries"/></td>
           <td class="formField"><input id="retries" type="text" value="${dataSource.retries}"/></td>
         </tr>
+        <tr>
+
+          <td COLSPAN=2>
+              <div id="sleep-reactivation-ds"/>
+          </td>
+        </tr>
+
+
 <%@ include file="/WEB-INF/jsp/dataSourceEdit/dsEventsFoot.jspf" %>
 
 <tag:pointList pointHelpId="httpRetrieverPP">
@@ -210,3 +261,5 @@
     </tr>
   </tbody>
 </tag:pointList>
+<%@ include file="/WEB-INF/jsp/include/vue/vue-app.js.jsp"%>
+<%@ include file="/WEB-INF/jsp/include/vue/vue-view.js.jsp"%>
