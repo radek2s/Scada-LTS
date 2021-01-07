@@ -75,6 +75,18 @@ public class DataSourceDAO {
 				+ COLUMN_NAME_DATA + " "
 			+ "from dataSources ";
 
+	private static final String DATA_SOURCE_PLC_SELECT = "" +
+			"SELECT DISTINCT " +
+			"ds." + COLUMN_NAME_ID + ", " +
+			"ds." + COLUMN_NAME_XID + ", " +
+			"ds." + COLUMN_NAME_NAME + ", " +
+			"ds." + COLUMN_NAME_DATA + " " +
+			"FROM dataSources ds " +
+			"JOIN dataPoints dp ON " +
+			"dp.dataSourceId = ds." + COLUMN_NAME_ID + " " +
+			"WHERE dp.plcAlarmLevel>0";
+
+
 	private static final String DATA_SOURCE_SELECT_WHERE_ID = ""
 				+ DATA_SOURCE_SELECT
 			+ "where "
@@ -117,6 +129,14 @@ public class DataSourceDAO {
 			+ "from dataSourceUsers where "
 				+ COLUMN_NAME_USER_ID + "=? ";
 
+	private static final String DATA_SOURCE_SELECT_WHERE_LIKE_NAME = ""
+			+ "select "
+				+ COLUMN_NAME_ID + ", "
+				+ COLUMN_NAME_XID + ", "
+				+ COLUMN_NAME_NAME + ", "
+				+ COLUMN_NAME_DATA + " "
+			+ "from dataSources where name like ?";
+
 	private static final String DATA_SOURCE_USER_INSERT = ""
 			+ "insert into dataSourceUsers values (?,?) ";
 
@@ -134,6 +154,8 @@ public class DataSourceDAO {
 			+ EventType.EventSources.DATA_SOURCE
 			+ " and "
 				+ COLUMN_NAME_EH_EVENT_TYPE_REF + "=? ";
+
+
 	// @formatter:on
 
 	private class DataSourceRowMapper implements RowMapper<DataSourceVO<?>> {
@@ -167,6 +189,24 @@ public class DataSourceDAO {
 
 		List<DataSourceVO<?>> objList = DAO.getInstance().getJdbcTemp().query(DATA_SOURCE_SELECT, new DataSourceRowMapper());
 		Collections.sort(objList, new DataSourceNameComparator());
+		return objList;
+	}
+
+	public List<DataSourceVO<?>> getDataSourcesPlc() {
+		List<DataSourceVO<?>> list = DAO.getInstance().getJdbcTemp().query(DATA_SOURCE_PLC_SELECT, new DataSourceRowMapper());
+		return list;
+	}
+
+	public List<DataSourceVO<?>> getDataSourceBaseOfName( String partOfNameDS) {
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("getDataSources()");
+		}
+
+		List<DataSourceVO<?>> objList = DAO.getInstance().getJdbcTemp().query(
+				DATA_SOURCE_SELECT_WHERE_LIKE_NAME,
+				new Object[]{String.format("%%%s%%",partOfNameDS)},
+				new DataSourceRowMapper());
+
 		return objList;
 	}
 

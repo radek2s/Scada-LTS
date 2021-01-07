@@ -37,6 +37,7 @@
         <prop key="/emport.shtm">emportController</prop>
         <prop key="/event_handlers.shtm">eventHandlersController</prop>
         <prop key="/events.shtm">eventsController</prop>
+        <prop key="/app.shtm">appController</prop>
         <prop key="/help.shtm">helpController</prop>
         <prop key="/logout.htm">logoutController</prop>
         <prop key="/mailing_lists.shtm">mailingListsController</prop>
@@ -54,6 +55,7 @@
         <prop key="/usersProfiles.shtm">usersProfilesController</prop>
         <prop key="/views.shtm">viewsController</prop>
         <prop key="/watch_list.shtm">watchListController</prop>
+        <prop key="/modern_watch_list.shtm">modernWatchListController</prop>
         <prop key="/webcam_live_feed.htm">webcamLiveFeedController</prop>
         <prop key="/export_project.htm">projectExporterController</prop>
         <prop key="/import_project.htm">projectImporterController</prop>
@@ -104,6 +106,10 @@
   
   <bean id="eventsController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
     <property name="viewName"><value>events</value></property>
+  </bean>
+
+  <bean id="appController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+    <property name="viewName"><value>app</value></property>
   </bean>
   
   <bean id="helpController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
@@ -179,6 +185,10 @@
     
   <bean id="watchListController" class="com.serotonin.mango.web.mvc.controller.WatchListController">
     <property name="viewName"><value>watchList</value></property>
+  </bean>
+
+  <bean id="modernWatchListController" class="com.serotonin.mango.web.mvc.controller.WatchListController">
+    <property name="viewName"><value>watchListModern</value></property>
   </bean>
   
   <bean id="webcamLiveFeedController" class="com.serotonin.mango.web.mvc.controller.WebcamLiveFeedController">
