@@ -24,8 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionBindingListener;
+//import javax.servlet.http.HttpSessionBindingEvent;
+//import javax.servlet.http.HttpSessionBindingListener;
 
 import br.org.scadabr.vo.exporter.ZIPProjectManager;
 import br.org.scadabr.vo.usersProfiles.UsersProfileVO;
@@ -60,7 +60,7 @@ import com.serotonin.web.dwr.DwrResponseI18n;
 import com.serotonin.web.i18n.LocalizableMessage;
 
 @JsonRemoteEntity
-public class User implements SetPointSource, HttpSessionBindingListener,
+public class User implements SetPointSource,
 		JsonSerializable {
 	private int id = Common.NEW_ID;
 	@JsonRemoteProperty
@@ -140,25 +140,25 @@ public class User implements SetPointSource, HttpSessionBindingListener,
 	// / HttpSessionBindingListener implementation
 	// /
 	//
-	public void valueBound(HttpSessionBindingEvent evt) {
-		// User is bound to a session when logged in. Notify the event manager.
-		SystemEventType.raiseEvent(new SystemEventType(
-				SystemEventType.TYPE_USER_LOGIN, id), System
-				.currentTimeMillis(), true, new LocalizableMessage(
-				"event.login", username));
-	}
-
-	public void valueUnbound(HttpSessionBindingEvent evt) {
-		// User is unbound from a session when logged out or the session
-		// expires.
-		SystemEventType.returnToNormal(new SystemEventType(
-				SystemEventType.TYPE_USER_LOGIN, id), System
-				.currentTimeMillis());
-
-		// Terminate any testing utility
-		if (testingUtility != null)
-			testingUtility.cancel();
-	}
+//	public void valueBound(HttpSessionBindingEvent evt) {
+//		// User is bound to a session when logged in. Notify the event manager.
+//		SystemEventType.raiseEvent(new SystemEventType(
+//				SystemEventType.TYPE_USER_LOGIN, id), System
+//				.currentTimeMillis(), true, new LocalizableMessage(
+//				"event.login", username));
+//	}
+//
+//	public void valueUnbound(HttpSessionBindingEvent evt) {
+//		// User is unbound from a session when logged out or the session
+//		// expires.
+//		SystemEventType.returnToNormal(new SystemEventType(
+//				SystemEventType.TYPE_USER_LOGIN, id), System
+//				.currentTimeMillis());
+//
+//		// Terminate any testing utility
+//		if (testingUtility != null)
+//			testingUtility.cancel();
+//	}
 
 	// Convenience method for JSPs
 	public boolean isDataSourcePermission() {

@@ -57,7 +57,8 @@ public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport 
     
     @Bean
     public WebSocketMessageBrokerStatsMonitor statsMonitor() {
-        return new WebSocketMessageBrokerStatsMonitor((SubProtocolWebSocketHandler) subProtocolWebSocketHandler(), clientOutboundChannelExecutor());
+//        return new WebSocketMessageBrokerStatsMonitor((SubProtocolWebSocketHandler) subProtocolWebSocketHandler(), clientOutboundChannelExecutor());
+        return null;
     }
     
     @Override

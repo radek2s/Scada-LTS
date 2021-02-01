@@ -28,6 +28,7 @@ public class ReactivationConnectHttpRetriever implements StatefulJob {
 
         Key keyJob = jobExecutionContext.getJobDetail().getKey();
 
+
         Map.Entry entry = ReactivationManager.getInstance().getId(keyJob.getName());
         int id = (int) entry.getValue();
         String name = (String) entry.getKey();

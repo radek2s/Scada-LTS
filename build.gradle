@@ -23,7 +23,6 @@ repositories {
 
 war {
     dependsOn(':scadalts-ui:copyNewUiImages')
-    exclude './src/main/webapp/WEB-INF/lib/*'
 }
 
 task clearDockerDir(type: Delete) {
@@ -42,8 +41,12 @@ task installWebDependency(type: Exec) {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir:'src/main/webapp/WEB-INF/lib')
-    implementation fileTree(include: ['*.jar'], dir: System.getenv("CATALINA_HOME") + '/lib')
+    providedCompile fileTree(include: ['*.jar'], dir:'src/main/webapp/WEB-INF/lib')
+    providedCompile fileTree(include: ['*.jar'], dir: System.getenv("CATALINA_HOME") + '/lib')
+
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.3'
+    providedCompile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 
     /* --- Dependencies --- */
     // Logging
@@ -74,25 +77,28 @@ dependencies {
     implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.3'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient-win', version: '4.5.3'
 
-
     // DataBases
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.38'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
     implementation group: 'org.flywaydb', name: 'flyway-core', version: '6.5.5'
 
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.3'
+
     // Spring
-    implementation group: 'org.springframework', name: 'spring-core', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-aop', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-beans', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-context', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-context-support', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-expression', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-messaging', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-web', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-webmvc', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-jdbc', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-tx', version: '4.3.16.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-websocket', version: '4.3.16.RELEASE'
-    testImplementation group: 'org.springframework', name: 'spring-test', version: '4.3.16.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-aop', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-context-support', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-expression', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-messaging', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.2.12.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-websocket', version: '5.2.12.RELEASE'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.2.12.RELEASE'
 
     // DataSources
     implementation group: 'com.rabbitmq', name: 'amqp-client', version: '5.4.1'

@@ -124,27 +124,27 @@ public class DerbyAccess extends DatabaseAccess {
 
     @Override
     protected boolean newDatabaseCheck(ExtendedJdbcTemplate ejt) {
-        int count = ejt.queryForInt("select count(1) from sys.systables where tablename='USERS'");
-        if (count == 0) {
+//        int count = ejt.queryForInt("select count(1) from sys.systables where tablename='USERS'");
+//        if (count == 0) {
             // The users table wasn't found, so assume that this is a new Mango instance.
             // Create the tables
-            try {
-                FileOutputStream out = new FileOutputStream("createTables.log");
-                Connection conn = DataSourceUtils.getConnection(dataSource);
-                org.apache.derby.tools.ij.runScript(conn,
-                        ctx.getResourceAsStream("/WEB-INF/db/createTables-derby.sql"), "ASCII", out, Common.UTF8);
-                DataSourceUtils.releaseConnection(conn, dataSource);
-                out.flush();
-                out.close();
-            }
-            catch (Exception e) {
-                // Should never happen, so just wrap in a runtime exception and rethrow.
-                throw new ShouldNeverHappenException(e);
-            }
-
-            return true;
-        }
-
+//            try {
+//                FileOutputStream out = new FileOutputStream("createTables.log");
+//                Connection conn = DataSourceUtils.getConnection(dataSource);
+//                org.apache.derby.tools.ij.runScript(conn,
+//                        ctx.getResourceAsStream("/WEB-INF/db/createTables-derby.sql"), "ASCII", out, Common.UTF8);
+//                DataSourceUtils.releaseConnection(conn, dataSource);
+//                out.flush();
+//                out.close();
+//            }
+//            catch (Exception e) {
+//                // Should never happen, so just wrap in a runtime exception and rethrow.
+//                throw new ShouldNeverHappenException(e);
+//            }
+//
+//            return true;
+//        }
+//
         return false;
     }
 
